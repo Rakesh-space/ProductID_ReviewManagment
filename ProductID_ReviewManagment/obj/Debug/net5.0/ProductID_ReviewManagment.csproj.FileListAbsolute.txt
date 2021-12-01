@@ -1,0 +1,16 @@
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\bin\Debug\net5.0\ProductID_ReviewManagment.exe
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\bin\Debug\net5.0\ProductID_ReviewManagment.deps.json
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\bin\Debug\net5.0\ProductID_ReviewManagment.runtimeconfig.json
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\bin\Debug\net5.0\ProductID_ReviewManagment.runtimeconfig.dev.json
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\bin\Debug\net5.0\ProductID_ReviewManagment.dll
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\bin\Debug\net5.0\ref\ProductID_ReviewManagment.dll
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\bin\Debug\net5.0\ProductID_ReviewManagment.pdb
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\obj\Debug\net5.0\ProductID_ReviewManagment.csproj.AssemblyReference.cache
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\obj\Debug\net5.0\ProductID_ReviewManagment.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\obj\Debug\net5.0\ProductID_ReviewManagment.AssemblyInfoInputs.cache
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\obj\Debug\net5.0\ProductID_ReviewManagment.AssemblyInfo.cs
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\obj\Debug\net5.0\ProductID_ReviewManagment.csproj.CoreCompileInputs.cache
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\obj\Debug\net5.0\ProductID_ReviewManagment.dll
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\obj\Debug\net5.0\ref\ProductID_ReviewManagment.dll
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\obj\Debug\net5.0\ProductID_ReviewManagment.pdb
+C:\Users\admin\source\repos\ProductID_ReviewManagment\ProductID_ReviewManagment\obj\Debug\net5.0\ProductID_ReviewManagment.genruntimeconfig.cache
