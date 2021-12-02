@@ -145,6 +145,7 @@ namespace ProductID_ReviewManagment
 
             RetrieveDataFromDataTable(table);
             RetrieveDataFromDataTables(table);
+            AverageOfRating(table);
         }
         public static void RetrieveDataFromDataTable(DataTable table)
         {
@@ -168,6 +169,20 @@ namespace ProductID_ReviewManagment
             {
                 Console.WriteLine("Product ID : " + product);
             }
+        }
+
+        /// <summary>
+        ///UC-10 Finding the average rating value
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public static double AverageOfRating(DataTable table)
+        {
+            List<ProductReviews> products = new List<ProductReviews>();
+            DataTable table1 = CreateDataTable(products);
+            double result = (double)table1.Select().Where(p => p["rating"] != DBNull.Value).Select(c => Convert.ToDecimal(c["rating"])).Average();
+            Console.WriteLine(result);
+            return result;
         }
     }
 }
