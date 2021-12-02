@@ -24,8 +24,12 @@ namespace ProductID_ReviewManagment
             };
             Console.WriteLine("Top 3 Records : ");
             RetrieveTop3RecordsFromList(list);
-            Console.WriteLine("\n");
+
+            Console.WriteLine("Records based on rating and product id : ");
             RetrieveRecordsBasedOnRatingAndProductId(list);
+            Console.WriteLine("Counting Ech Product Id Present in List");
+            CountingProductId(list);
+
 
         }
         //This method for retrieve top three records from list
@@ -39,15 +43,32 @@ namespace ProductID_ReviewManagment
                 Console.WriteLine("ProductId : " + product.ProductId + " UserId : " + product.UserId + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
             }
         }
-        //This method for retrieve the records based on rating and product identifier.      
+        //uc3
+
+        //This method for retrieve the records whose rating is greater than 3
+        //and product id is either1 or 4 or 9
         public static void RetrieveRecordsBasedOnRatingAndProductId(List<ProductReviews> list)
         {
-            //where means using linq list and Lamda
+            //method syntax linq
+            //where means using linq list
             var data = (list.Where(r => r.Rating > 3 && (r.ProductId == 1 || r.ProductId == 4 || r.ProductId == 9))).ToList();
             foreach (var element in data)
             {
                 Console.WriteLine("ProductId : " + element.ProductId + " Rating : " + element.Rating + " UserId : " + element.UserId + " Review : " + element.Review + " IsLike : " + element.IsLike);
             }
+        }
+        // uc4
+        //counting each ID present the list
+        public static void CountingProductId(List<ProductReviews> list)
+        {
+            // method syntax for Linq and lamda
+            var data = list.GroupBy(p => p.ProductId).Select(x => new { ProductId = x.Key, count = x.Count() });
+            foreach (var element in data)
+            {
+                Console.WriteLine("ProductId " + element.ProductId + "\t" + "Count" + element.count);
+                Console.WriteLine("--------------");
+            }
+
         }
     }
 }
