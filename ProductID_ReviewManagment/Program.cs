@@ -34,7 +34,9 @@ namespace ProductID_ReviewManagment
             Console.WriteLine("\n");
             Console.WriteLine("Retrive product ID and review present in the list");
             RetrieveProductIDAndReview(list);
-
+            Console.WriteLine("\n");
+            Console.WriteLine("Skip TOP 5 Records and Reminin Display.");
+            SkipTop5RecordsFromList(list);
 
         }
         //This method for retrieve top three records from list
@@ -85,6 +87,19 @@ namespace ProductID_ReviewManagment
             {
                 Console.WriteLine("ProductId : " + element.ProductId + " \t " + "Review" + element.Review);
                 Console.WriteLine("-----------------------");
+            }
+        }
+
+        //UC6
+        //This method for skip top 5 rcords and retrive other data
+        public static void SkipTop5RecordsFromList(List<ProductReviews> list)
+        {
+            //Query syntax for LINQ And Lamda
+            var result = (from product in list orderby product.Rating descending select product).Skip(3);
+            var remainingRecords = result;
+            foreach (ProductReviews product in remainingRecords)
+            {
+                Console.WriteLine("ProductId : " + product.ProductId + " UserId : " + product.UserId + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
             }
         }
     }
