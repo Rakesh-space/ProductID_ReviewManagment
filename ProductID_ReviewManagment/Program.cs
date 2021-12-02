@@ -8,6 +8,7 @@ namespace ProductID_ReviewManagment
     {
         static void Main(string[] args)
         {
+
             // 1 st method
             //List<ProductReview> list = new List<ProductReview>();
             //list.Add(new ProductReview() { ProductId = 1, UserId = 1, Review = "good", Rating = 17, IsLike = true });
@@ -24,11 +25,15 @@ namespace ProductID_ReviewManagment
             };
             Console.WriteLine("Top 3 Records : ");
             RetrieveTop3RecordsFromList(list);
-
+            Console.WriteLine("\n");
             Console.WriteLine("Records based on rating and product id : ");
             RetrieveRecordsBasedOnRatingAndProductId(list);
+            Console.WriteLine("\n");
             Console.WriteLine("Counting Ech Product Id Present in List");
             CountingProductId(list);
+            Console.WriteLine("\n");
+            Console.WriteLine("Retrive product ID and review present in the list");
+            RetrieveProductIDAndReview(list);
 
 
         }
@@ -49,7 +54,7 @@ namespace ProductID_ReviewManagment
         //and product id is either1 or 4 or 9
         public static void RetrieveRecordsBasedOnRatingAndProductId(List<ProductReviews> list)
         {
-            //method syntax linq
+            //method syntax linq and Lamda
             //where means using linq list
             var data = (list.Where(r => r.Rating > 3 && (r.ProductId == 1 || r.ProductId == 4 || r.ProductId == 9))).ToList();
             foreach (var element in data)
@@ -61,7 +66,7 @@ namespace ProductID_ReviewManagment
         //counting each ID present the list
         public static void CountingProductId(List<ProductReviews> list)
         {
-            // method syntax for Linq and lamda
+            //method syntax linq and Lamda
             var data = list.GroupBy(p => p.ProductId).Select(x => new { ProductId = x.Key, count = x.Count() });
             foreach (var element in data)
             {
@@ -69,6 +74,18 @@ namespace ProductID_ReviewManagment
                 Console.WriteLine("--------------");
             }
 
+        }
+        //UC-5
+        //Retrive product ID and review present in the list
+        public static void RetrieveProductIDAndReview(List<ProductReviews> list)
+        {
+            //method syntax linq and Lamda
+            var p = list.Select(product => new { ProductId = product.ProductId, Review = product.Review }).ToList();
+            foreach (var element in p)
+            {
+                Console.WriteLine("ProductId : " + element.ProductId + " \t " + "Review" + element.Review);
+                Console.WriteLine("-----------------------");
+            }
         }
     }
 }
