@@ -6,183 +6,185 @@ using System.Linq;
 namespace ProductID_ReviewManagment
 {
     class Program
-    {
-        static void Main(string[] args)
+    { // <summary>
+        /// UC1-Adding a values in a list
+        /// </summary>
+        /// <param name="products"></param>
+        public static int AddingProductReview(List<ProductReviews> products)
         {
+            products.Add(new ProductReviews() { productId = 1, userId = 1, review = "Good", rating = 14, isLike = true });
+            products.Add(new ProductReviews() { productId = 1, userId = 1, review = "Very Good", rating = 19, isLike = true });
+            products.Add(new ProductReviews() { productId = 2, userId = 6, review = "Average", rating = 10, isLike = true });
+            products.Add(new ProductReviews() { productId = 4, userId = 7, review = "Good", rating = 15, isLike = true });
+            products.Add(new ProductReviews() { productId = 9, userId = 8, review = "Average", rating = 11, isLike = true });
+            products.Add(new ProductReviews() { productId = 3, userId = 9, review = "Bad", rating = 6, isLike = false });
 
-            // 1 st method
-            //List<ProductReview> list = new List<ProductReview>();
-            //list.Add(new ProductReview() { ProductId = 1, UserId = 1, Review = "good", Rating = 17, IsLike = true });
 
-            //2 nd method
-            //Collection intializer
-            List<ProductReviews> list = new List<ProductReviews>()
-            {
-                new ProductReviews(){ ProductId=1,UserId=1,Review="good",Rating=17,IsLike=true},
-                new ProductReviews(){ ProductId=2,UserId=3,Review="bad",Rating=1,IsLike=false},
-                new ProductReviews(){ ProductId=3,UserId=5,Review="good",Rating=20,IsLike=true},
-                new ProductReviews(){ ProductId=4,UserId=7,Review="average",Rating=10,IsLike=true},
-                new ProductReviews(){ ProductId=5,UserId=1,Review="bad",Rating=5,IsLike=false}
-            };
-            Console.WriteLine("Top 3 Records : ");
-            RetrieveTop3RecordsFromList(list);
-            Console.WriteLine("\n");
-            Console.WriteLine("Records based on rating and product id : ");
-            RetrieveRecordsBasedOnRatingAndProductId(list);
-            Console.WriteLine("\n");
-            Console.WriteLine("Counting Ech Product Id Present in List");
-            CountingProductId(list);
-            Console.WriteLine("\n");
-            Console.WriteLine("Retrive product ID and review present in the list");
-            RetrieveProductIDAndReview(list);
-            Console.WriteLine("\n");
-            Console.WriteLine("Skip TOP 5 Records and Reminin Display.");
-            SkipTop5RecordsFromList(list);
-            Console.WriteLine("\n");
-            Console.WriteLine("Retrive Only Product id Review all Record in  list");
-            RetrieveProductIDAndReviewAllRecord(list);
-            Console.WriteLine("\n");
-            Console.WriteLine("Here Create same like as DataTable in Visula studio.");
-            CreateDataTable();
-
+            IterateThroughList(products);
+            return products.Count;
         }
-        //This method for retrieve top three records from list
-        public static void RetrieveTop3RecordsFromList(List<ProductReviews> list)
+        /// <summary>
+        /// Display the details in list
+        /// </summary>
+        /// <param name="products"></param>
+        public static void IterateThroughList(List<ProductReviews> products)
         {
-            //Query syntax for LINQ 
-            var result = from product in list orderby product.Rating descending select product;
-            var topThreeRecords = result.Take(3);
-            foreach (ProductReviews product in topThreeRecords)
+            foreach (ProductReviews product in products)
             {
-                Console.WriteLine("ProductId : " + product.ProductId + " UserId : " + product.UserId + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
+                Console.WriteLine("ProductId:{0}\t UserId:{1}\t Review:{2}\tRating:{3}\tIsLike:{4}\t", product.productId, product.userId, product.review, product.rating, product.isLike);
             }
         }
-        //uc3
-
-        //This method for retrieve the records whose rating is greater than 3
-        //and product id is either1 or 4 or 9
-        public static void RetrieveRecordsBasedOnRatingAndProductId(List<ProductReviews> list)
+        /// <summary>
+        /// UC2--->Retrieve Top Three Records Whose Rating is High
+        /// </summary>
+        /// <param name="products"></param>
+        /// <returns></returns>
+        public static int RetrieveTopThreeRating(List<ProductReviews> products)
         {
-            //method syntax linq and Lamda
-            //where means using linq list
-            var data = (list.Where(r => r.Rating > 3 && (r.ProductId == 1 || r.ProductId == 4 || r.ProductId == 9))).ToList();
-            foreach (var element in data)
+            AddingProductReview(products);
+            Console.WriteLine("\n-------------Retrieving Top Three Records Based On Rating--------------");
+            var res = (from product in products orderby product.rating descending select product).Take(3).ToList();
+            IterateThroughList(res);
+            return res.Count;
+        }
+        /// <summary>
+        /// UC3-->Retrieve  records from list based on productid and rating > 3  
+        /// </summary>
+        /// <param name="products"></param>
+        /// <returns></returns>
+        public static int[] RetrieveRecordsBasedOnRatingAndProductId(List<ProductReviews> products)
+        {
+            AddingProductReview(products);
+            Console.WriteLine("\n-----------Retrieve Records Based On Rating and Product Id-----------");
+            var res = (from product in products where product.rating > 3 && (product.productId == 1 || product.productId == 4 || product.productId == 9) select product.productId).ToArray();
+            return res;
+        }
+        /// <summary>
+        ///  UC4-->Retrived the count of productId
+        /// </summary>
+        /// <param name="products"></param>
+        /// <returns></returns>
+        public static string CountingProductId(List<ProductReviews> products)
+        {
+            string res = null;
+            AddingProductReview(products);
+            var data = products.GroupBy(x => x.productId).Select(a => new { ProductId = a.Key, count = a.Count() });
+            Console.WriteLine(data);
+            foreach (var ele in data)
             {
-                Console.WriteLine("ProductId : " + element.ProductId + " Rating : " + element.Rating + " UserId : " + element.UserId + " Review : " + element.Review + " IsLike : " + element.IsLike);
+                Console.WriteLine("ProductId " + ele.ProductId + " " + "Count " + " " + ele.count);
+                Console.WriteLine("-------------");
+                res += ele.ProductId + " " + ele.count + " ";
+                Console.WriteLine(res);
+            }
+            return res;
+        }
+        /// <summary>
+        /// UC5 and UC7---->Retrieving the product id in list
+        /// </summary>
+        /// <param name="products"></param>
+        /// <returns></returns>
+        public static string RetrieveOnlyProductIdAndReviews(List<ProductReviews> products)
+        {
+            string result = null;
+            AddingProductReview(products);
+            var res = products.Select(product => new { ProductId = product.productId, Review = product.review }).ToList();
+            foreach (var ele in res)
+            {
+                Console.WriteLine("ProductId " + ele.ProductId + " " + "Review " + " " + ele.Review);
+                result += ele.ProductId + " ";
+            }
+            return result;
+        }
+        /// <summary>
+        /// UC6--->Skip Top five records
+        /// </summary>
+        /// <param name="products"></param>
+        /// <returns></returns>
+        public static int SkipTopFiveRecords(List<ProductReviews> products)
+        {
+            AddingProductReview(products);
+            Console.WriteLine("\n----------Skip Top Five records in list");
+            var res = (from product in products orderby product.rating descending select product).Skip(5).ToList();
+            IterateThroughList(res);
+            return res.Count;
+        }
+        /// <summary>
+        /// UC8-->Using DataTable 
+        /// </summary>
+        /// <param name="products"></param>
+        public static DataTable CreateDataTable(List<ProductReviews> products)
+        {
+            AddingProductReview(products);
+            DataTable dt = new DataTable();
+            dt.Columns.Add("productId");
+            dt.Columns.Add("userId");
+            dt.Columns.Add("rating");
+            dt.Columns.Add("review");
+            dt.Columns.Add("isLike", typeof(bool));
+
+            foreach (var data in products)
+            {
+                dt.Rows.Add(data.productId, data.userId, data.rating, data.review, data.isLike);
+            }
+            //IterateTable(dt);
+            return dt;
+        }
+        /// <summary>
+        /// Iterate Thorugh Table
+        /// </summary>
+        /// <param name="table"></param>
+        public static void IterateTable(DataTable table)
+        {
+            foreach (DataRow p in table.Rows)
+            {
+                Console.WriteLine("{0} | {1} | {2} | {3} | {4} ", p["productId"], p["userId"], p["rating"], p["review"], p["isLike"]);
             }
         }
-        // uc4
-        //counting each ID present the list
-        public static void CountingProductId(List<ProductReviews> list)
+        /// <summary>
+        /// UC9-retrieve the records whose column islike has true using (DataTable)
+        /// </summary>
+        /// <param name="table"></param>
+        /// <returns></returns>
+        public static int ReturnsOnlyIsLikeFieldAsTrue()
         {
-            //method syntax linq and Lamda
-            var data = list.GroupBy(p => p.ProductId).Select(x => new { ProductId = x.Key, count = x.Count() });
-            foreach (var element in data)
+            List<ProductReviews> products = new List<ProductReviews>();
+            DataTable table = CreateDataTable(products);
+            int count = 0;
+            var res = from t in table.AsEnumerable() where t.Field<bool>("isLike") == true select t;
+            foreach (var p in res)
             {
-                Console.WriteLine("ProductId " + element.ProductId + "\t" + "Count" + element.count);
-                Console.WriteLine("--------------");
+                Console.WriteLine("{0} | {1} | {2} | {3} | {4} ", p["productId"], p["userId"], p["rating"], p["review"], p["isLike"]);
+                count++;
             }
-
+            return count;
         }
-        //UC-5
-        //Retrive product ID and review present in the list
-        public static void RetrieveProductIDAndReview(List<ProductReviews> list)
-        {
-            //method syntax linq and Lamda
-            var p = list.Select(product => new { ProductId = product.ProductId, Review = product.Review }).ToList();
-            foreach (var element in p)
-            {
-                Console.WriteLine("ProductId : " + element.ProductId + " \t " + "Review" + element.Review);
-                Console.WriteLine("-----------------------");
-            }
-        }
-
-        //UC6
-        //This method for skip top 5 rcords and retrive other data
-        public static void SkipTop5RecordsFromList(List<ProductReviews> list)
-        {
-            //Query syntax for LINQ And Lamda
-            var result = (from product in list orderby product.Rating descending select product).Skip(3);
-            var remainingRecords = result;
-            foreach (ProductReviews product in remainingRecords)
-            {
-                Console.WriteLine("ProductId : " + product.ProductId + " UserId : " + product.UserId + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
-            }
-        }
-
-        //UC-7
-        //This method for Retrieve Only product id and review from list of all recoprds
-        public static void RetrieveProductIDAndReviewAllRecord(List<ProductReviews> productReviewsList)
-        {
-
-            //Query syntax for LINQ And Lamda
-            var p = productReviewsList.Select(product => new { productID = product.ProductId, review = product.Review });
-            foreach (var element in p)
-            {
-                Console.WriteLine("ProductID: " + element.productID + "\t" + "Review:" + element.review);
-            }
-        }
-
-        //uc8
-        //This method for create standard class as "DataTable" using use SQL
-        public static void CreateDataTable()
-        {
-            DataTable table = new DataTable();
-            table.Columns.Add("ProductID", typeof(int));
-            table.Columns.Add("UserID", typeof(int));
-            table.Columns.Add("Rating", typeof(int));
-            table.Columns.Add("Review", typeof(string));
-            table.Columns.Add("IsLike", typeof(bool));
-
-            table.Rows.Add(1, 1, 15, "good", true);
-            table.Rows.Add(2, 2, 5, "bad", false);
-            table.Rows.Add(3, 5, 19, "good", true);
-            table.Rows.Add(4, 7, 10, "average", true);
-            table.Rows.Add(5, 2, 5, "bad", false);
-            table.Rows.Add(6, 5, 20, "good", true);
-            table.Rows.Add(7, 7, 13, "average", true);
-            table.Rows.Add(8, 1, 7, "bad", false);
-
-            RetrieveDataFromDataTable(table);
-            RetrieveDataFromDataTables(table);
-            AverageOfRating(table);
-        }
-        public static void RetrieveDataFromDataTable(DataTable table)
-        {
-            var result = (from product in table.AsEnumerable() select product.Field<int>("ProductID")).ToList();
-            Console.WriteLine("Product ID are");
-            foreach (var product in result)
-            {
-                Console.WriteLine(product);
-            }
-        }
-
-        //UC-9
-        //This method for retrieve records who's Islike value is true
-        public static void RetrieveDataFromDataTables(DataTable table)
-        {
-            //AsEnumerable this obj can be use LinQ expression or method
-            //Field provid strongly type access of each column value in the specify row
-            var result = (from product in table.AsEnumerable() where product.Field<bool>("IsLike") == true select product.Field<int>("ProductID")).ToList();
-            Console.WriteLine("Product Id of Who's Islike value is true are : ");
-            foreach (var product in result)
-            {
-                Console.WriteLine("Product ID : " + product);
-            }
-        }
-
         /// <summary>
         ///UC-10 Finding the average rating value
         /// </summary>
         /// <param name="table"></param>
         /// <returns></returns>
-        public static double AverageOfRating(DataTable table)
+        public static double AverageOfRating()
         {
             List<ProductReviews> products = new List<ProductReviews>();
             DataTable table1 = CreateDataTable(products);
             double result = (double)table1.Select().Where(p => p["rating"] != DBNull.Value).Select(c => Convert.ToDecimal(c["rating"])).Average();
             Console.WriteLine(result);
             return result;
+        }
+        //UC-11
+        public static int ReturnsReviewMessageContainsGood()
+        {
+            List<ProductReviews> products = new List<ProductReviews>();
+            DataTable table = CreateDataTable(products);
+            int count = 0;
+            var res = from t in table.AsEnumerable() where t.Field<string>("review") == "Good" select t;
+            foreach (var p in res)
+            {
+                Console.WriteLine("{0} | {1} | {2} | {3} | {4} ", p["productId"], p["userId"], p["rating"], p["review"], p["isLike"]);
+                count++;
+            }
+            return count;
         }
     }
 }
