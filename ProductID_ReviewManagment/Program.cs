@@ -144,6 +144,7 @@ namespace ProductID_ReviewManagment
             table.Rows.Add(8, 1, 7, "bad", false);
 
             RetrieveDataFromDataTable(table);
+            RetrieveDataFromDataTables(table);
         }
         public static void RetrieveDataFromDataTable(DataTable table)
         {
@@ -152,6 +153,20 @@ namespace ProductID_ReviewManagment
             foreach (var product in result)
             {
                 Console.WriteLine(product);
+            }
+        }
+
+        //UC-9
+        //This method for retrieve records who's Islike value is true
+        public static void RetrieveDataFromDataTables(DataTable table)
+        {
+            //AsEnumerable this obj can be use LinQ expression or method
+            //Field provid strongly type access of each column value in the specify row
+            var result = (from product in table.AsEnumerable() where product.Field<bool>("IsLike") == true select product.Field<int>("ProductID")).ToList();
+            Console.WriteLine("Product Id of Who's Islike value is true are : ");
+            foreach (var product in result)
+            {
+                Console.WriteLine("Product ID : " + product);
             }
         }
     }
