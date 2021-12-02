@@ -24,6 +24,8 @@ namespace ProductID_ReviewManagment
             };
             Console.WriteLine("Top 3 Records : ");
             RetrieveTop3RecordsFromList(list);
+            Console.WriteLine("\n");
+            RetrieveRecordsBasedOnRatingAndProductId(list);
 
         }
         //This method for retrieve top three records from list
@@ -37,6 +39,15 @@ namespace ProductID_ReviewManagment
                 Console.WriteLine("ProductId : " + product.ProductId + " UserId : " + product.UserId + " Rating : " + product.Rating + " Review : " + product.Review + " IsLike : " + product.IsLike);
             }
         }
-
+        //This method for retrieve the records based on rating and product identifier.      
+        public static void RetrieveRecordsBasedOnRatingAndProductId(List<ProductReviews> list)
+        {
+            //where means using linq list and Lamda
+            var data = (list.Where(r => r.Rating > 3 && (r.ProductId == 1 || r.ProductId == 4 || r.ProductId == 9))).ToList();
+            foreach (var element in data)
+            {
+                Console.WriteLine("ProductId : " + element.ProductId + " Rating : " + element.Rating + " UserId : " + element.UserId + " Review : " + element.Review + " IsLike : " + element.IsLike);
+            }
+        }
     }
 }
