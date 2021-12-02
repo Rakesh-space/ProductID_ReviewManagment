@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 
 namespace ProductID_ReviewManagment
@@ -40,6 +41,9 @@ namespace ProductID_ReviewManagment
             Console.WriteLine("\n");
             Console.WriteLine("Retrive Only Product id Review all Record in  list");
             RetrieveProductIDAndReviewAllRecord(list);
+            Console.WriteLine("\n");
+            Console.WriteLine("Here Create same like as DataTable in Visula studio.");
+            CreateDataTable();
 
         }
         //This method for retrieve top three records from list
@@ -116,6 +120,38 @@ namespace ProductID_ReviewManagment
             foreach (var element in p)
             {
                 Console.WriteLine("ProductID: " + element.productID + "\t" + "Review:" + element.review);
+            }
+        }
+
+        //uc8
+        //This method for create standard class as "DataTable" using use SQL
+        public static void CreateDataTable()
+        {
+            DataTable table = new DataTable();
+            table.Columns.Add("ProductID", typeof(int));
+            table.Columns.Add("UserID", typeof(int));
+            table.Columns.Add("Rating", typeof(int));
+            table.Columns.Add("Review", typeof(string));
+            table.Columns.Add("IsLike", typeof(bool));
+
+            table.Rows.Add(1, 1, 15, "good", true);
+            table.Rows.Add(2, 2, 5, "bad", false);
+            table.Rows.Add(3, 5, 19, "good", true);
+            table.Rows.Add(4, 7, 10, "average", true);
+            table.Rows.Add(5, 2, 5, "bad", false);
+            table.Rows.Add(6, 5, 20, "good", true);
+            table.Rows.Add(7, 7, 13, "average", true);
+            table.Rows.Add(8, 1, 7, "bad", false);
+
+            RetrieveDataFromDataTable(table);
+        }
+        public static void RetrieveDataFromDataTable(DataTable table)
+        {
+            var result = (from product in table.AsEnumerable() select product.Field<int>("ProductID")).ToList();
+            Console.WriteLine("Product ID are");
+            foreach (var product in result)
+            {
+                Console.WriteLine(product);
             }
         }
     }
